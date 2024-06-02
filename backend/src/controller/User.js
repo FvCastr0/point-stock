@@ -29,7 +29,7 @@ class UserController {
       if (!searchUser) {
         res.status(400).json({ msg: 'The email does not exist!' });
       } else if (await bcrypt.compare(password, searchUser.password)) {
-        res.status(200).json({ msg: 'User logged in successfully!', token: jwt.sign(searchUser.id, process.env.SECRET) });
+        res.status(200).json({ msg: 'User logged in successfully!', link: searchUser.id, token: jwt.sign(searchUser.id, process.env.SECRET) });
       } else res.status(400).json({ msg: 'The password is incorrect!' });
     } catch (e) {
       res.status(500).json({ msg: 'Something went wrong!' });
