@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import http from '../../../controllers/http';
@@ -68,17 +69,8 @@ const Main = styled.section`
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [cookies, setCookie] = useCookies(['token']);
-    async function verifyIfTokenIsTrue() {
-        await http.post('/user/verifyToken', { token: cookies.token })
-            .then((res => {
-                window.location.href = `/dashboard/${res.data.link}`
-
-            }))
-            .catch(err => {
-                toast.error(err.response.data.msg)
-            })
-    }
+    const [, setCookie] = useCookies(['token']);
+    const navigate = useNavigate();
 
     function handleEmailChange(e) {
         setEmail(e.target.value)
@@ -95,7 +87,7 @@ export default function Login() {
             .then((res => {
                 toast.success(res.data.msg);
                 setCookie('token', res.data.token);
-                verifyIfTokenIsTrue()
+                navigate(`/dashboard/${res.data.link}`)
             }))
             .catch(err => {
                 toast.error(err.response.data.msg)

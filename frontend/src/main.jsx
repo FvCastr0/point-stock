@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ThemeProvider } from 'styled-components';
 import './reset.css';
+import Dashboard from './screens/Dashboard';
 import Login from './screens/auth/Login';
 import theme from './theme';
 
@@ -25,6 +26,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} index />
+          <Route
+            path='/dashboard/:id'
+            element={<Dashboard />}
+          />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
